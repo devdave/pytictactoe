@@ -1,0 +1,59 @@
+<%velocity
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+#set($component = $conversation.resource.context.attributes.get('com.threecrickets.prudence.component'))
+#set($flavor = $component.context.attributes.get('com.threecrickets.prudence.flavor'))
+<html>
+<head>
+	<title>Stickstick - Three Crickets</title>
+	<link rel="shortcut icon" href="media/prudence.ico"/>
+	<link rel="stylesheet" media="screen" type="text/css" href="style/all.min.css"/>
+	<!--
+	The above is a unified-minified version of the scripts below:
+	(see the routing configuration for Stickstick, where we apply the CssUnifyMinify filter)
+	<link rel="stylesheet" media="screen" type="text/css" href="style/soft-cricket.css"/>
+	<link rel="stylesheet" media="screen" type="text/css" href="style/stickynote.css"/>
+	 -->
+	<script type="text/javascript" src="script/all.min.js"></script>
+	<!--
+	The above is a unified-minified version of the scripts below:
+	(see the routing configuration for Stickstick, where we apply the JavaScriptUnifyMinify filter)
+	<script type="text/javascript" src="script/jquery.min.js"></script>
+	<script type="text/javascript" src="script/jquery.ui.min.js"></script>		
+	<script type="text/javascript" src="script/jquery.loading.min.js"></script>
+	<script type="text/javascript" src="script/jquery.stickynote.js"></script>
+	<script type="text/javascript" src="script/json2.js"></script>
+	<script type="text/javascript" src="script/stickstick.js"></script>
+	 -->
+</head>
+<body>
+<div style="margin-left: auto; margin-right: auto; width: 1000px;">
+	<table width="100%"><tr valign="top"><td>
+		<h1>Stickstick</h1>
+		<p>
+			Share online sticky notes.
+		</p>
+		<p>
+			<button id="refresh">Refresh</button>
+			<button id="new-small">Create Small Note</button>
+			<button id="new-large">Create Large Note</button>
+			Showing Board:
+			<span id="boards"></span>
+		</p>
+	</td><td align="right">
+		<p>
+			<a href="http://threecrickets.com/prudence/" class="neutral"><img src="media/prudence-small.png" border="0"></a>
+		</p>
+	</td></tr></table>
+	<div id="content" style="position: relative; width: 100%; height: 500px; border: 1px solid black;"></div>
+	<p>
+		Stickstick is a fun demo application written in $flavor on <a href="http://threecrickets.com/prudence/">Prudence</a>,
+		with an <a href="http://www.h2database.com/">H2</a> database. It is meant to show
+		how easy it is to create powerful, scalable applications with Prudence.
+	</p>
+	<p>
+		Source code: <a href="data/?source=true">/data/</a>, <a href="data/note/1/?source=true">/data/note/</a>.
+	</p>
+</div>
+</body>
+</html>
+%>
