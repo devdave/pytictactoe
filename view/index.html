@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Would you like to play a game?</title>
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+        <style type="text/css">
+            #gameBoard {
+                margin-top: 12em;
+                margin-left: 35%;                
+                float: left;
+            }
+            
+            #gameBoard .gameSpot {
+                min-width: 120px;
+                height; 15em;
+                min-height: 120px;
+                float: left;
+                border: solid black thin;
+            }
+            #gameBoard .gameSpot:hover {
+                background-color: yellow;
+            }
+            
+            #gameBoard .player {
+                background-color: red !important;
+            }
+            
+            #gameBoard .cpu {
+                background-color: blue !important;
+            }
+                        
+        </style>
+	
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+		function Say(message){
+		    if( $("#dBox").length <= 0){
+			$('body').append($("<div>").attr({"id":"dBox","height":"170px","width":"400px"}) );
+		    }
+		    
+		    $("#dBox").text(message).dialog({"height":"170","width":"400"});
+		}
+                $(document).on('click', '.gameSpot', function(eventObj){
+                    var self = $(this)
+		    var x = self.data('x'),
+			y = self.data('y');
+		    		    
+		    
+		    console.log(x,y)
+		    jQuery.getJSON("/move/" + x + "/" + y
+				   , {}
+				   , function(data){
+					console.log(data)
+					if( data && data.success == true){
+					    var grid = data.board;
+					    cellTypes = {0:"", 1:"cpu", 2:"player"};
+					    
+					    for(var x = 0; x < 3; x++){
+						for(var y = 0; y < 3; y++){
+						    cellType = cellTypes[ grid[x][y] ]
+						    $('.gameSpot[data-x="'+x+'"][data-y="'+y+'"]').attr({ "class" : "gameSpot " + cellType });
+						}
+					    }
+					    if(data.game_end){
+						Say(data.msg);
+					    }
+					}else{
+					    console.log(data.error);
+					}
+				   }
+		    );
+		    
+                    
+                });
+		$(function(){
+		   jQuery.getJSON("/init") 
+		});
+        </script>
+       
+    </head>
+    <body style="z-index:1">                
+        <fieldset id="gameBoard" >
+        <!-- This pretty much violates a slew of good practices...but I'm alright with that for here -->
+            <div class="gameSpot" data-x="0" data-y="0" />&nbsp;</div>
+            <div class="gameSpot" data-x="1" data-y="0" />&nbsp;</div>
+            <div class="gameSpot" data-x="2" data-y="0" />&nbsp;</div>
+            <br style="clear:left">
+            <div class="gameSpot" data-x="0" data-y="1" />&nbsp;</div>
+            <div class="gameSpot" data-x="1" data-y="1" />&nbsp;</div>
+            <div class="gameSpot" data-x="2" data-y="1" />&nbsp;</div>
+            <br style="clear:left">
+            <div class="gameSpot" data-x="0" data-y="2" />&nbsp;</div>
+            <div class="gameSpot" data-x="1" data-y="2" />&nbsp;</div>
+            <div class="gameSpot" data-x="2" data-y="2" />&nbsp;</div>
+            <br style="clear:left">            
+        </fieldset>
+        <a href="#" data-reset="1">Reset</a>
+</body>
+</html>

@@ -1,0 +1,5 @@
+*.pyc
+*.pyo
+*.exe
+*/ve/*
+*.komodoproject
